@@ -67,10 +67,13 @@ check_email = (token) ->
 # .then (data) ->
 #   console.log data
 
+gn = {
+  get_email
+  set_email
+  check_email
+}
 
-exports.get_email = get_email
-exports.set_email = set_email
-exports.check_email = check_email
+exports.gn = gn
 
 
 
