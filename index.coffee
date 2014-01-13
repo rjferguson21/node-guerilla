@@ -73,7 +73,7 @@ gn = {
   check_email
 }
 
-exports.gn = gn
+module.exports.gn = gn
 
 
 
