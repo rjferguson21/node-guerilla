@@ -32,7 +32,7 @@ make_post_request = (params, data) ->
 
   request.post( request_url, {form: data}, (error, response, body) ->
     if response.statusCode is 200
-      deferred.resolve body
+      deferred.resolve JSON.parse(body)
     else
       deferred.reject error
   )
