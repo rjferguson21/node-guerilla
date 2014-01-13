@@ -1,4 +1,4 @@
-gn = require './index'
+gn = require 'node-guerilla'
 _ = require 'lodash'
 
 # Create a new email
