@@ -49,10 +49,14 @@ set_email = (token, email, domain) ->
 check_email = (token) ->
   return make_request({f:'check_email', sid_token: token, seq: 0})
 
+fetch_email = (token, email_id) ->
+  return make_request({f:'fetch_email', sid_token: token, email_id: email_id})
+
 gn = {
   get_email
   set_email
   check_email
+  fetch_email
 }
 
 module.exports = gn
