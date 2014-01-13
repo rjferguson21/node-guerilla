@@ -22,7 +22,7 @@ make_request = (params) ->
 
   return deferred.promise
 
-make_post_request = (params) ->
+make_post_request = (params, data) ->
 
   deferred = q.defer()
 
@@ -30,7 +30,7 @@ make_post_request = (params) ->
 
   request_url = base_url + '?' + qs.stringify( params )
 
-  request.post( request_url, {form: params}, (error, response, body) ->
+  request.post( request_url, {form: data}, (error, response, body) ->
     if response.statusCode is 200
       deferred.resolve body
     else
@@ -42,8 +42,9 @@ make_post_request = (params) ->
 get_email = ->
   return make_request({f: 'get_email_address', lang: 'en'})
 
-set_email = (token) ->
-  return make_post_request({f:'set_email_address', sid_token: token})
+set_email = (token, email, domain) ->
+  console.log arguments
+  return make_post_request({f:'set_email_user'}, {email_user: email, sid_token: token, domain: domain})
 
 check_email = (token) ->
   return make_request({f:'check_email', sid_token: token, seq: 0})
