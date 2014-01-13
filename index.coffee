@@ -48,32 +48,13 @@ set_email = (token) ->
 check_email = (token) ->
   return make_request({f:'check_email', sid_token: token, seq: 0})
 
-# Create a new email
-
-# get_email().then (current_email) ->
-#   return current_email.sid_token
-# .then (token) ->
-#   set_email(token)
-#   return token
-# .then (token) ->
-#     check_email(token).then (data) ->
-#       console.log data
-
-# Check an existing email
-
-# set_email('qspfm7o3fhc0gf676mb4sjlk15')
-# .then ->
-#   check_email('qspfm7o3fhc0gf676mb4sjlk15')
-# .then (data) ->
-#   console.log data
-
 gn = {
   get_email
   set_email
   check_email
 }
 
-module.exports.gn = gn
+module.exports = gn
 
 
 
