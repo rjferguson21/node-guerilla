@@ -2,9 +2,6 @@ qs = require 'querystring'
 q = require 'q'
 request = require 'request'
 
-
-current_email = {}
-
 make_request = (params) ->
 
   deferred = q.defer()
