@@ -65,15 +65,18 @@ get_link = ( subject, contains_text, token ) ->
   link_text = q.defer()
 
   gn.get_list(token).then (data) ->
-    return _.find(data.list, {mail_subject: subject})['mail_id']
+    email_object = _.find(data.list, {mail_subject: subject})
+    if email_object?
+      return ['mail_id']
+    else
+      link_text.reject 'no_email'
   .then (email_id) ->
     gn.fetch_email(token, email_id).then (data) ->
       $ = cheerio.load(data.mail_body)
       link_text.fulfill $("a:contains(#{contains_text})").text()
-  .then(null, (error) ->
+  .then null, (error) ->
     link_text.reject error
-    console.log 'error', error
-  )
+
   return link_text.promise
 
 get_link_poll = ( subject, contains_text, token ) ->
