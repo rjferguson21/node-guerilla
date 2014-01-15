@@ -87,7 +87,7 @@ get_link_poll = ( subject, contains_text, token ) ->
     get_link(subject, contains_text, token).then (email) ->
       link.resolve email
       clearInterval(check_email)
-  , 3000
+  , 1500
 
   return link.promise
 
