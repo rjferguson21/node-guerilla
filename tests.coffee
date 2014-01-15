@@ -1,6 +1,5 @@
 gn = require './index'
 
-
 gn.get_email()
 .then (account) ->
   console.log account

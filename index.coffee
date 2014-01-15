@@ -83,11 +83,16 @@ get_link_poll = (subject, contains_text, token) ->
 
   link = q.defer()
 
-  check_email = setInterval ->
-    get_link(subject, contains_text, token).then (email) ->
-      link.resolve email
-      clearInterval(check_email)
-  , 1500
+  get_link(subject, contains_text, token)
+  .then (email) ->
+    link.resolve email
+  , (error) ->
+    if error is 'no_email'
+      setTimeout ->
+        link.resolve get_link_poll(subject, contains_text, token)
+      , 1500
+    else
+      link.reject error
 
   return link.promise
 
