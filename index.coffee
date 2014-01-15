@@ -58,12 +58,44 @@ get_list = (token) ->
 fetch_email = (token, email_id) ->
   return make_request({f:'fetch_email', sid_token: token, email_id: email_id})
 
+# helper functions
+
+get_link = ( subject, contains_text, token ) ->
+
+  link_text = q.defer()
+
+  gn.get_list(token).then (data) ->
+    return _.find(data.list, {mail_subject: subject})['mail_id']
+  .then (email_id) ->
+    gn.fetch_email(token, email_id).then (data) ->
+      $ = cheerio.load(data.mail_body)
+      link_text.fulfill $("a:contains(#{contains_text})").text()
+  .then(null, (error) ->
+    link_text.reject error
+    console.log 'error', error
+  )
+  return link_text.promise
+
+get_link_poll = ( subject, contains_text, token ) ->
+
+  link = q.defer()
+
+  check_email = setInterval ->
+    get_link(subject, contains_text, token).then (email) ->
+      link.resolve email
+      clearInterval(check_email)
+  , 3000
+
+  return link.promise
+
 gn = {
   get_email
   set_email
   check_email
   fetch_email
   get_list
+  get_link
+  get_link_poll
 }
 
 module.exports = gn
