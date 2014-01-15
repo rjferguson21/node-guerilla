@@ -67,7 +67,7 @@ get_link = ( subject, contains_text, token ) ->
   gn.get_list(token).then (data) ->
     email_object = _.find(data.list, {mail_subject: subject})
     if email_object?
-      return ['mail_id']
+      return email_object['mail_id']
     else
       link_text.reject 'no_email'
   .then (email_id) ->
