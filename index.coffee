@@ -60,7 +60,7 @@ fetch_email = (token, email_id) ->
 
 # helper functions
 
-get_link = ( subject, contains_text, token ) ->
+get_link = (subject, contains_text, token) ->
 
   link_text = q.defer()
 
@@ -79,7 +79,7 @@ get_link = ( subject, contains_text, token ) ->
 
   return link_text.promise
 
-get_link_poll = ( subject, contains_text, token ) ->
+get_link_poll = (subject, contains_text, token) ->
 
   link = q.defer()
 
