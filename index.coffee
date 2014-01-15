@@ -73,8 +73,8 @@ get_link = (subject, contains_text, token) ->
   .then (email_id) ->
     gn.fetch_email(token, email_id).then (data) ->
       $ = cheerio.load(data.mail_body)
-      link_text.fulfill $("a:contains(#{contains_text})").text()
-  .then null, (error) ->
+      link_text.resolve $("a:contains(#{contains_text})").text()
+  , (error) ->
     link_text.reject error
 
   return link_text.promise
