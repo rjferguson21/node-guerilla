@@ -65,15 +65,19 @@ get_link = (subject, contains_text, token) ->
   link_text = q.defer()
 
   gn.get_list(token).then (data) ->
+
     email_object = _.find(data.list, {mail_subject: subject})
     if email_object?
       return email_object['mail_id']
     else
-      link_text.reject 'no_email'
+      link_text.reject 'no_matching_email'
   .then (email_id) ->
-    gn.fetch_email(token, email_id).then (data) ->
+
+    gn.fetch_email(token, email_id)
+    .then (data) ->
       $ = cheerio.load(data.mail_body)
       link_text.resolve $("a:contains(#{contains_text})").text()
+
   , (error) ->
     link_text.reject error
 
@@ -87,7 +91,7 @@ get_link_poll = (subject, contains_text, token) ->
   .then (email) ->
     link.resolve email
   , (error) ->
-    if error is 'no_email'
+    if error is 'no_matching_email'
       setTimeout ->
         link.resolve get_link_poll(subject, contains_text, token)
       , 1500
