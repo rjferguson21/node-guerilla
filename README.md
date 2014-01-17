@@ -1,2 +1,2 @@
-# node-guerilla
-## API wrapper for [http://www.guerillamail.com]
+# node-guerrilla
+## API wrapper for [http://www.guerrillamail.com]
