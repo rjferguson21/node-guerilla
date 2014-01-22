@@ -15,7 +15,7 @@
     "coffee-script": "*"
   },
   "scripts": {
-    "prepublish": "./node_modules/coffee-script/bin/cake/build"
+    "prepublish": "./node_modules/coffee-script/bin/cake build"
   },
   "directories": {
     "lib": "./lib"
