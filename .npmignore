@@ -1,5 +1,5 @@
 *.coffee
 .git*
 Cakefile
-lib/
+src/
 test/
