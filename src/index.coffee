@@ -83,20 +83,25 @@ get_link = (subject, contains_text, token) ->
 
   return link_text.promise
 
-get_link_poll = (subject, contains_text, token) ->
+get_link_poll = (subject, contains_text, token, attempts=0) ->
 
   link = q.defer()
 
-  get_link(subject, contains_text, token)
-  .then (email) ->
-    link.resolve email
-  , (error) ->
-    if error is 'no_matching_email'
-      setTimeout ->
-        link.resolve get_link_poll(subject, contains_text, token)
-      , 1500
-    else
-      link.reject error
+  attempts = attempts + 1
+
+  if attempts < 6
+    get_link(subject, contains_text, token)
+    .then (email) ->
+      link.resolve email
+    , (error) ->
+      if error is 'no_matching_email'
+        setTimeout ->
+          link.resolve get_link_poll(subject, contains_text, token, attempts)
+        , 4000
+      else
+        link.reject error
+  else
+    link.reject 'max_email_fetch_attempts_reached'
 
   return link.promise
 
