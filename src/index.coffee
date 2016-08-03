@@ -76,8 +76,7 @@ get_link = (subject, contains_text, token) ->
     gn.fetch_email(token, email_id)
     .then (data) ->
       $ = cheerio.load(data.mail_body)
-      elem = $("a:contains(#{contains_text})")
-      link_text.resolve elem.attr('href') || elem.text()
+      link_text.resolve $("a:contains(#{contains_text})").text()
 
   , (error) ->
     link_text.reject error
